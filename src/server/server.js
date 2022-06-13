@@ -7,6 +7,17 @@ const express = require('express');
 // Start up an instance of app
 const app = express();
 
+// Load environment variables from .env file
+const dotenv = require('dotenv');
+dotenv.config();
+
+// Submit forms and file uploads | Fetch API to node.js
+const FormData = require('form-data');
+const fetch = require('node-fetch');
+
+// log in console
+const { log } = require('console');
+
 /* Middleware */
 // Here we are configuring express to use body-parser as middle-ware.
 const bodyParser = require('body-parser');
@@ -18,17 +29,17 @@ const cors = require('cors');
 const { send } = require('process');
 app.use(cors());
 
+// ! To not get an 'self signed certificate in certificate chain' error when fetching
+//process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 // Initialize the main project folder
-app.use(express.static('website'));
+app.use(express.static('dist'));
 
 // Setup Server
-const port = 3000;
-/* Spin up the server */
-const server = app.listen(port, listening);
-function listening() {
-    // console.log(server);
-    console.log(`running on localhost: ${port}`);
-}
+// designates what port the app will listen to for incoming requests
+app.listen(8081, function() {
+    console.log('Example app listening on port 8081!');
+});
 
 //
 //
