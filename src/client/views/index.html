@@ -11,11 +11,11 @@
     </head>
     <body>
         <div id="app">
-            <div class="holder headline">
+            <div class="headline">
                 Travel App
             </div>
-            <div class="holder zip">
-                <label for="zip">Travel Destination</label>
+            <div class="dest">
+                <label for="dest">Travel Destination</label>
                 <input
                     type="text"
                     id="dest"
@@ -26,7 +26,7 @@
                 <label for="date">Travel Date</label>
                 <input type="date" id="datepicker" />
             </div>
-            <div class="holder feel">
+            <div class="feel">
                 <label for="feelings">How are you feeling today?</label>
                 <textarea
                     class="myInput"
@@ -35,9 +35,15 @@
                     rows="9"
                     cols="50"
                 ></textarea>
-                <button id="generate" type="submit">Generate</button>
+                <button
+                    id="generate"
+                    type="submit"
+                    onclick="return Client.performAction(event)"
+                >
+                    Generate
+                </button>
             </div>
-            <div class="holder entry">
+            <div class="entry">
                 <div class="title">Most Recent Entry</div>
                 <div id="entryHolder">
                     <div id="date"></div>

@@ -1,9 +1,9 @@
-// import { checkForName } from './js/nameChecker';
+import { performAction } from './js/app.js';
 // import { handleSubmit } from './js/formHandler';
 
 // console.log(checkForName);
 
-alert('I AM ON');
+alert('TRAVEL APP IS ON');
 console.log('CHANGE!!');
 
 import './styles/style.scss';
@@ -14,3 +14,4 @@ import './styles/style.scss';
 // import './styles/header.scss';
 
 // export { checkForName, handleSubmit };
+export { performAction };

@@ -9,18 +9,20 @@ let d = new Date();
 let newDate = d.getMonth() + 1 + '.' + d.getDate() + '.' + d.getFullYear();
 
 // Event listener to add function to existing HTML DOM element
-document.querySelector('#generate').addEventListener('click', performAction);
+// * Wird jetzt am Button getriggert
+// document.querySelector('#generate').addEventListener('click', performAction);
 
 /* Function called by event listener */
-function performAction(e) {
-    // Get ZIP from HTML
-    const zipCode = document.querySelector('#zip').value;
-    getWeatherData(baseURL, zipCode, apiKey);
+function performAction(event) {
+    event.preventDefault();
+    // Get dest from HTML
+    const destCode = document.querySelector('#dest').value;
+    getWeatherData(baseURL, destCode, apiKey);
 }
 
 /* Function to GET Web API Data*/
-const getWeatherData = async (baseURL, zipCode, apiKey) => {
-    const res = await fetch(baseURL + zipCode + '&appid=' + apiKey);
+const getWeatherData = async (baseURL, destCode, apiKey) => {
+    const res = await fetch(baseURL + destCode + '&appid=' + apiKey);
     try {
         const data = await res.json();
         console.log(data);
@@ -78,3 +80,5 @@ const retrieveData = async () => {
         console.log('error', error);
     }
 };
+
+export { performAction };
