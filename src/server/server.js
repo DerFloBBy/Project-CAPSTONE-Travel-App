@@ -64,3 +64,38 @@ function addEntry(req, res) {
     res.send(projectData);
     console.log(projectData);
 }
+
+const baseURL_GeoNames = 'http://api.geonames.org/searchJSON?q=';
+// destCode = 'Berlin';
+
+app.post('/geonames', function(req, res) {
+    const response = fetch(
+        baseURL_GeoNames +
+            req.body.text +
+            '&maxRows=1&username=' +
+            process.env.userName_GeoNames
+    )
+        .then((response) => {
+            const body = response.json();
+            return body;
+        })
+        .then((body) => {
+            console.log(body);
+            return body;
+        })
+        .then((body) => {
+            const country = body.geonames[0].countryName;
+            const lat = body.geonames[0].lat;
+            const lng = body.geonames[0].lng;
+            const name = body.geonames[0].name;
+
+            const geoData = { country, lat, lng, name };
+
+            return geoData;
+        })
+        .then((geoData) => {
+            console.log(geoData);
+            res.send(geoData);
+        })
+        .catch((error) => console.log('ERROOORRR', error));
+});
