@@ -20,7 +20,11 @@ function performAction(event) {
         text: destCode
         // text: 'Berlin'
     };
-    apiRequest(destCode);
+    if (destCode.text == '') {
+        alert('Please insert a Destination');
+    } else {
+        apiRequest(destCode);
+    }
 }
 
 async function apiRequest(destCode) {

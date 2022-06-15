@@ -94,6 +94,11 @@ app.post('/geonames', function(req, res) {
             return geoData;
         })
         .then((geoData) => {
+            Object.assign(projectData, geoData);
+            console.log(projectData);
+            return geoData;
+        })
+        .then((geoData) => {
             console.log(geoData);
             res.send(geoData);
         })
