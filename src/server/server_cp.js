@@ -47,49 +47,54 @@ app.listen(8081, function() {
 // Respond with JS object when a GET request is made to the homepage
 app.get('/getProjectData', function(req, res) {
     res.send(projectData);
+    // console.log(projectData);
 });
 
-const baseURL_GeoNames = 'http://api.geonames.org/searchJSON?q=';
-// destCode = 'Berlin';
-app.post('/geonames', getCoordinates);
+// Update JS object when a POST request is made to the homepage
+app.post('/addEntry', addEntry);
 
-function getCoordinates(req, res) {
-    const coordinates = fetch(
-        `${baseURL_GeoNames}${req.body.text}&maxRows=1&username=${process.env.userName_GeoNames}`
-    )
-        .then((response) => {
-            const body = response.json();
-            return body;
-        })
-        .then((body) => {
-            const city = body.geonames[0].name;
-            const country = body.geonames[0].countryName;
-            const lat = body.geonames[0].lat;
-            const lon = body.geonames[0].lng;
-            const geoData = { city, country, lat, lon };
-            return geoData;
-        })
-        .then((geoData) => {
-            Object.assign(projectData, geoData);
-            console.log(projectData);
-            return projectData;
-        })
-        .then(() => {
-            res.send(projectData);
-        })
-        .catch((error) => console.log('ERROOORRR', error));
+function addEntry(req, res) {
+    // console.log(req.body);
+    newEntry = {
+        DATE: req.body.date,
+        FEEL: req.body.feel,
+        TEMP: req.body.temp
+    };
+    Object.assign(projectData, newEntry);
+    res.send(projectData);
+    console.log(projectData);
 }
+
+app.post('/geonames', function(req, res) {
+    const data = getCoordinates();
+});
+
+// * EXAMPLE: http://api.geonames.org/searchJSON?q=berlin&maxRows=10&username=fboelke
+const baseURL_GeoNames = 'http://api.geonames.org/searchJSON?q=';
+
+const getCoordinates = async () => {
+    try {
+        const response = await fetch(
+            `${baseURL_GeoNames}${req.body.text}&maxRows=1&username=${process.env.userName_GeoNames}`
+        );
+        const body = await response.json();
+        const city = body.geonames[0].name;
+        const country = body.geonames[0].countryName;
+        const lat = body.geonames[0].lat;
+        const lon = body.geonames[0].lng;
+        const geoData = { city, country, lat, lon };
+        console.log(geoData);
+    } catch (error) {
+        console.log('ERRRORRR: ', error);
+    }
+};
 
 // * EXAMPLE: https://api.weatherbit.io/v2.0/current?lat=52.52437&lon=13.41053&key=bd6c074fe9ad4fb88baca0323764482d
 const baseURL_Weather = 'https://api.weatherbit.io/v2.0/current?';
 
-app.post('/weather', getCurrentWeather);
-
-function getCurrentWeather(req, res) {
-    console.log(req.body.lat);
-
-    const weather = fetch(
-        `${baseURL_Weather}lat=${req.body.lat}&lon=${req.body.lon}&key=${process.env.apiKey_Weather}`
+const getCurrentWeather = async () => {
+    await fetch(
+        `${baseURL_Weather}lat=${projectData.lat}&lon=${projectData.lon}&key=${process.env.apiKey_Weather}`
     )
         .then((response) => {
             const body = response.json();
@@ -102,14 +107,8 @@ function getCurrentWeather(req, res) {
         })
         .then((weatherData) => {
             Object.assign(projectData, weatherData);
-            console.log('LOG: getCurrentWeather');
-
             console.log(projectData);
-            return projectData;
+            return weatherData;
         })
-        .then(() => {
-            res.send(projectData);
-        })
-
         .catch((error) => console.log('ERROOORRR', error));
-}
+};
