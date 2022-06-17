@@ -49,13 +49,14 @@ app.get('/getProjectData', function(req, res) {
     res.send(projectData);
 });
 
+// * EXAMPLE: http://api.geonames.org/searchJSON?q=berlin&maxRows=10&username=fboelke
 const baseURL_GeoNames = 'http://api.geonames.org/searchJSON?q=';
-// destCode = 'Berlin';
+
 app.post('/geonames', getCoordinates);
 
 function getCoordinates(req, res) {
     const coordinates = fetch(
-        `${baseURL_GeoNames}${req.body.text}&maxRows=1&username=${process.env.userName_GeoNames}`
+        `${baseURL_GeoNames}${req.body.dest}&maxRows=1&username=${process.env.userName_GeoNames}`
     )
         .then((response) => {
             const body = response.json();
@@ -83,7 +84,7 @@ function getCoordinates(req, res) {
 // * EXAMPLE: https://api.weatherbit.io/v2.0/current?lat=52.52437&lon=13.41053&key=bd6c074fe9ad4fb88baca0323764482d
 const baseURL_Weather = 'https://api.weatherbit.io/v2.0/current?';
 
-app.post('/weather', getCurrentWeather);
+app.post('/currentWeather', getCurrentWeather);
 
 function getCurrentWeather(req, res) {
     console.log(req.body.lat);

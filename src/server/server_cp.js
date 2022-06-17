@@ -75,7 +75,7 @@ const baseURL_GeoNames = 'http://api.geonames.org/searchJSON?q=';
 const getCoordinates = async () => {
     try {
         const response = await fetch(
-            `${baseURL_GeoNames}${req.body.text}&maxRows=1&username=${process.env.userName_GeoNames}`
+            `${baseURL_GeoNames}${req.body.dest}&maxRows=1&username=${process.env.userName_GeoNames}`
         );
         const body = await response.json();
         const city = body.geonames[0].name;
