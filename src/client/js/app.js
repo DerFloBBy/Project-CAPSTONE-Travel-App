@@ -33,33 +33,33 @@ function performAction(event) {
     console.log(days);
 
     // Put Travel Data in an object
-    let travelData = {
-        dest: travelDest,
-        // dest: 'Berlin',
+    allData = {
+        // dest: travelDest,
+        dest: 'Berlin',
         days: days
     };
 
-    if (travelData.dest == '') {
+    if (allData.dest == '') {
         alert('Please insert a Destination');
-    } else if (isNaN(travelData.days)) {
+    } else if (isNaN(allData.days)) {
         alert('Please insert a Travel Date!');
     } else if (days < 0) {
         alert('Please select a date in the future!');
     } else {
-        apiRequest(travelData);
+        apiRequest(allData);
     }
 }
 
-async function apiRequest(travelData) {
+async function apiRequest(allData) {
     console.log('---Reiseziel:');
-    console.log(travelData.dest);
+    console.log(allData.dest);
     fetch('http://localhost:8081/geonames', {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(travelData)
+        body: JSON.stringify(allData)
     })
         .then((apiResponse) => {
             const result = apiResponse.json();
@@ -69,9 +69,10 @@ async function apiRequest(travelData) {
             Object.assign(allData, result);
         })
         .then(() => {
-            if (travelData.days > 7) {
+            if (allData.days > 7) {
                 console.log('Reise beginnt nach einer Woche');
-            } else if (travelData.days >= 0) {
+                forecastWeatherApiRequest(allData);
+            } else if (allData.days >= 0) {
                 console.log('Reise beginnt innerhalb einer Woche');
                 currentWeatherApiRequest(allData);
             }
@@ -80,9 +81,30 @@ async function apiRequest(travelData) {
 }
 
 async function currentWeatherApiRequest(allData) {
-    console.log('---Koordinaten:');
+    console.log('---Koordinaten-current:');
     console.log(allData);
     fetch('http://localhost:8081/currentWeather', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(allData)
+    })
+        .then((apiResponse) => {
+            const result = apiResponse.json();
+            return result;
+        })
+        .then((result) => {
+            console.log(result);
+        })
+        .catch((error) => console.log('ERROOORRR: ', error));
+}
+
+async function forecastWeatherApiRequest(allData) {
+    console.log('---Koordinaten-forecast:');
+    console.log(allData);
+    fetch('http://localhost:8081/forecastWeather', {
         method: 'POST',
         credentials: 'same-origin',
         headers: {

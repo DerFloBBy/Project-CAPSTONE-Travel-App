@@ -55,6 +55,7 @@ const baseURL_GeoNames = 'http://api.geonames.org/searchJSON?q=';
 app.post('/geonames', getCoordinates);
 
 function getCoordinates(req, res) {
+    Object.assign(projectData, req.body); // Client-Body to Server-ProjectData
     const coordinates = fetch(
         `${baseURL_GeoNames}${req.body.dest}&maxRows=1&username=${process.env.userName_GeoNames}`
     )
@@ -82,15 +83,13 @@ function getCoordinates(req, res) {
 }
 
 // * EXAMPLE: https://api.weatherbit.io/v2.0/current?lat=52.52437&lon=13.41053&key=bd6c074fe9ad4fb88baca0323764482d
-const baseURL_Weather = 'https://api.weatherbit.io/v2.0/current?';
+const baseURL_Weather = 'https://api.weatherbit.io/v2.0/';
 
 app.post('/currentWeather', getCurrentWeather);
 
 function getCurrentWeather(req, res) {
-    console.log(req.body.lat);
-
     const weather = fetch(
-        `${baseURL_Weather}lat=${req.body.lat}&lon=${req.body.lon}&key=${process.env.apiKey_Weather}`
+        `${baseURL_Weather}current?lat=${req.body.lat}&lon=${req.body.lon}&key=${process.env.apiKey_Weather}`
     )
         .then((response) => {
             const body = response.json();
@@ -104,6 +103,36 @@ function getCurrentWeather(req, res) {
         .then((weatherData) => {
             Object.assign(projectData, weatherData);
             console.log('LOG: getCurrentWeather');
+
+            console.log(projectData);
+            return projectData;
+        })
+        .then(() => {
+            res.send(projectData);
+        })
+
+        .catch((error) => console.log('ERROOORRR', error));
+}
+
+// * EXAMPLE: https://api.weatherbit.io/v2.0/forecast/daily?lat=52.52437&lon=13.41053&key=bd6c074fe9ad4fb88baca0323764482d
+app.post('/forecastWeather', getForecastWeather);
+
+function getForecastWeather(req, res) {
+    const weather = fetch(
+        `${baseURL_Weather}forecast/daily?lat=${req.body.lat}&lon=${req.body.lon}&key=${process.env.apiKey_Weather}`
+    )
+        .then((response) => {
+            const body = response.json();
+            return body;
+        })
+        .then((body) => {
+            const temp_fc = body.data[req.body.days].temp;
+            const weatherData = { temp_fc };
+            return weatherData;
+        })
+        .then((weatherData) => {
+            Object.assign(projectData, weatherData);
+            console.log('LOG: getForecastWeather');
 
             console.log(projectData);
             return projectData;
