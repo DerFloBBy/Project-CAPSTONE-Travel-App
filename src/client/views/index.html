@@ -22,7 +22,7 @@
                     placeholder="where do you wanne go?"
                 />
             </div>
-            <div>
+            <div class="date">
                 <label for="date">Travel Date</label>
                 <input
                     type="date"
@@ -31,15 +31,7 @@
                     placeholder="Enter your feelings here"
                 />
             </div>
-            <div class="feel">
-                <label for="feelings">How are you feeling today?</label>
-                <textarea
-                    class="myInput"
-                    id="feelings"
-                    placeholder="Enter your feelings here"
-                    rows="9"
-                    cols="50"
-                ></textarea>
+            <div class="btn">
                 <button
                     id="generate"
                     type="submit"
@@ -49,14 +41,15 @@
                 </button>
             </div>
             <div class="entry">
-                <div class="title">Most Recent Entry</div>
+                <div class="title">Result</div>
                 <div id="entryHolder">
-                    <div id="date"></div>
-                    <div id="temp"></div>
-                    <div id="content"></div>
+                    <div id="travelDest"></div>
+                    <div id="travelDeparture"></div>
+                    <div id="travelTemp"></div>
+                    <div id="travelPics"></div>
                 </div>
             </div>
         </div>
-        <script src="../js/app.js" type="text/javascript"></script>
+        <!-- <script src="../js/app.js" type="text/javascript"></script> -->
     </body>
 </html>

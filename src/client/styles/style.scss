@@ -1,5 +1,5 @@
 body {
-    background: #fffff8;
+    background: #f23557;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -7,22 +7,46 @@ body {
     display: grid;
     grid-auto-rows: minmax(50px, auto);
     /* grid-template-columns:  */
-    height: 100vh;
+    // height: 100vh;
     background: #f23557;
     color: #f0d43a;
     justify-content: center;
-    grid-gap: 1em;
+    grid-gap: 0.5em;
     font-size: 20px;
     font-family: 'Oswald', sans-serif;
-    border: 5px solid black;
-}
-
-.entry {
-    background: rgba(59, 74, 107, 0.4);
 }
 
 .headline {
     font-size: 42px;
+    text-align: center;
+    // border: 5px solid black;
+}
+
+.dest {
+    // border: 5px solid black;
+}
+
+.date {
+    // border: 5px solid black;
+}
+
+.dataPoint {
+    border-radius: 0.5em;
+}
+
+.btn {
+    // border: 5px solid black;
+}
+
+.entry {
+    background: rgba(59, 74, 107, 0.4);
+    // border: 5px solid black;
+}
+
+.title {
+    // font-size: 42px;
+    text-align: center;
+    // border: 5px solid black;
 }
 
 /*  Basic Styling To Override Default For Basic HTML Elements */
@@ -34,12 +58,13 @@ label {
 input {
     display: block;
     height: 60px;
-    width: 320px;
+    width: 400px;
     background: #22b2da;
     color: #f0d43a;
     font-size: 20px;
     font-family: 'Oswald', sans-serif;
     border: none;
+    box-shadow: 2px 4px 5px #444;
 }
 
 button {
@@ -62,16 +87,7 @@ button:active {
     background-color: #2e6630;
     transform: translateY(4px);
 }
-h1 {
-    font-size: 36px;
-}
 
-textarea {
-    background: #22b2da;
-    color: #f0d43a;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
-}
 /* Reset style for HTML element on active to have no border*/
 input:focus,
 select:focus,
