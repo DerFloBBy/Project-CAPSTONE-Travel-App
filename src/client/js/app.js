@@ -35,7 +35,7 @@ function performAction(event) {
     // Put Travel Data in an object
     allData = {
         // dest: travelDest,
-        dest: 'berlin',
+        dest: 'london',
         days: days
     };
 
@@ -68,29 +68,38 @@ async function apiRequest(allData) {
         .then((result) => {
             Object.assign(allData, result);
         })
-        // .then(() => {
-        //     if (allData.days > 7) {
-        //         console.log('Reise beginnt nach einer Woche');
-        //         forecastWeatherApiRequest(allData);
-        //     } else if (allData.days >= 0) {
-        //         console.log('Reise beginnt innerhalb einer Woche');
-        //         currentWeatherApiRequest(allData);
-        //     }
-        // })
-        // .then(() => {
-        //     console.log('Bilder abfragen');
-        //     pictureApiRequest(allData);
-        // })
         .then(() => {
             console.log('--CLIENT: ERGEBNISS');
             console.log(allData);
 
-            //     document.querySelector(
-            //         '#results_text'
-            //     ).innerHTML = `Your Text: ${result.text}`;
-            //     document.querySelector(
-            //         '#results_irony'
-            //     ).innerHTML = `Is it Irony? ${result.irony}`;
+            document.querySelector(
+                '#travelDest'
+            ).innerHTML = `Your chosen travel destination: <strong>${allData.city}, ${allData.country}</strong>`;
+
+            if (allData.days === 0) {
+                document.querySelector(
+                    '#travelDeparture'
+                ).innerHTML = `The journey starts <strong>TODAY</strong>!`;
+            } else if (allData.days === 1) {
+                document.querySelector(
+                    '#travelDeparture'
+                ).innerHTML = `The journey starts <strong>Tomorrow</strong>.`;
+            } else {
+                document.querySelector(
+                    '#travelDeparture'
+                ).innerHTML = `The journey starts in <strong>${allData.days}</strong> days.`;
+            }
+
+            if (allData.days < 7) {
+                document.querySelector(
+                    '#travelTemp'
+                ).innerHTML = `The current temperature is <strong>${allData.temp}°</strong>!`;
+            } else {
+                document.querySelector(
+                    '#travelTemp'
+                ).innerHTML = `The temperature will be around <strong>${allData.temp}°</strong>.`;
+            }
+
             document.querySelector('#travelPics').innerHTML = `<img
                 src="${allData.picture_url}"
                 alt="${allData.city}"
