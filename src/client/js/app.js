@@ -91,9 +91,10 @@ async function apiRequest(allData) {
             //     document.querySelector(
             //         '#results_irony'
             //     ).innerHTML = `Is it Irony? ${result.irony}`;
-            //     document.querySelector(
-            //         '#results_polarity'
-            //     ).innerHTML = `How is the Polarity? ${result.polarity}`;
+            document.querySelector('#travelPics').innerHTML = `<img
+                src="${allData.picture_url}"
+                alt="${allData.city}"
+            />`;
         })
 
         .catch((error) => console.log('ERROR -- apiRequest: ', error));

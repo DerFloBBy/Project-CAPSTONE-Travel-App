@@ -72,7 +72,7 @@ function getCoordinates(req, res) {
     console.log('LOG: projectData #1');
     console.log(projectData, '\n');
 
-    const coordinates = fetch(
+    fetch(
         `${baseURL_GeoNames}?q=${projectData.dest}&maxRows=1&username=${process.env.userName_GeoNames}`
     )
         .then((response) => response.json())
@@ -135,8 +135,10 @@ function getCoordinates(req, res) {
         })
         .then((response) => response.json())
         .then((body) => {
+            // * ZUFALLSZAHL - Source: https://wiki.selfhtml.org/wiki/JavaScript/Tutorials/Zufallszahlen
+            let picID = Math.floor(Math.random() * (10 - 1)) + 0;
             Object.assign(projectData, {
-                picture_url: body.hits[0].webformatURL
+                picture_url: body.hits[picID].webformatURL
             });
 
             console.log('LOG: projectData #4');
@@ -221,37 +223,6 @@ function getPicture(req, res) {
 
     const picture = fetch(
         `${baseURL_Picture}?key=${process.env.apiKey_Pixabay}&q=${req.body.city}&image_type=photo`
-    )
-        .then((response) => {
-            const body = response.json();
-            return body;
-        })
-        .then((body) => {
-            const picture_url = body.hits[0].webformatURL;
-            const pictureData = { picture_url };
-            return pictureData;
-        })
-        .then((pictureData) => {
-            Object.assign(projectData, pictureData);
-            console.log('LOG: getPicture');
-
-            console.log(projectData);
-            return projectData;
-        })
-        .then(() => {
-            res.send(projectData);
-        })
-
-        .catch((error) => console.log('ERROR -- getPicture: ', error));
-}
-
-function getAnotherPicture(req, res) {
-    console.log(
-        `${baseURL_Picture}?key=${process.env.apiKey_Pixabay}&q=${req.body.city}&image_type=photo`
-    );
-
-    const picture = fetch(
-        `${baseURL_Picture}?key=${process.env.apiKey_Pixabay}&q=london&image_type=photo`
     )
         .then((response) => {
             const body = response.json();
