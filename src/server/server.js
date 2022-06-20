@@ -44,10 +44,7 @@ app.listen(8081, function() {
 //
 //
 //
-// Respond with JS object when a GET request is made to the homepage
-app.get('/getProjectData', function(req, res) {
-    res.send(projectData);
-});
+//
 
 const baseURL_GeoNames = 'http://api.geonames.org/searchJSON';
 const baseURL_Weather = 'https://api.weatherbit.io/v2.0/';
@@ -62,16 +59,18 @@ const baseURL_Picture = 'https://pixabay.com/api/';
 // * SOURCE: https://stackoverflow.com/questions/40981040/using-a-fetch-inside-another-fetch-in-javascript
 //
 
-app.post('/geonames', getCoordinates);
+app.post('/apiRequest', getData);
 
-function getCoordinates(req, res) {
+function getData(req, res) {
     Object.assign(projectData, req.body); // Client-Body to Server-ProjectData
     console.log(
         '-----------------------------------------------------------------------'
     );
-    console.log('LOG: projectData #1');
+    console.log('---projectData #1');
     console.log(projectData, '\n');
 
+    // *** fetch GeonamesAPI ***
+    // ***************************
     fetch(
         `${baseURL_GeoNames}?q=${projectData.dest}&maxRows=1&username=${process.env.userName_GeoNames}`
     )
@@ -87,8 +86,6 @@ function getCoordinates(req, res) {
         })
         .then((geoData) => {
             Object.assign(projectData, geoData);
-            console.log('LOG: projectData #2');
-            console.log(projectData, '\n');
             return projectData;
         })
 
@@ -120,9 +117,6 @@ function getCoordinates(req, res) {
                     temp: body.data[0].temp
                 });
             }
-
-            console.log('LOG: projectData #3');
-            console.log(projectData, '\n');
             return projectData;
         })
 
@@ -135,114 +129,19 @@ function getCoordinates(req, res) {
         })
         .then((response) => response.json())
         .then((body) => {
-            // * ZUFALLSZAHL - Source: https://wiki.selfhtml.org/wiki/JavaScript/Tutorials/Zufallszahlen
+            // * RandomNumber - Source: https://wiki.selfhtml.org/wiki/JavaScript/Tutorials/Zufallszahlen
             let picID = Math.floor(Math.random() * (10 - 1)) + 0;
             Object.assign(projectData, {
                 picture_url: body.hits[picID].webformatURL
             });
+            return projectData;
+        })
 
-            console.log('LOG: projectData #4');
+        .then(() => {
+            console.log('---projectData #99');
             console.log(projectData, '\n');
-            return projectData;
-        })
-
-        .then(() => {
             res.send(projectData);
         })
 
-        .catch((error) => console.log('ERROR -- getCoordinates: ', error));
-}
-
-app.post('/currentWeather', getCurrentWeather);
-
-function getCurrentWeather(req, res) {
-    // const weather = fetch(
-    //     `${baseURL_Weather}current?lat=${req.body.lat}&lon=${req.body.lon}&key=${process.env.apiKey_Weather}`
-    // )
-    console.log('LOG: projectData #xxx');
-    console.log(projectData, '\n');
-
-    const weather = fetch(
-        `${baseURL_Weather}current?lat=${projectData.lat}&lon=${projectData.lon}&key=${process.env.apiKey_Weather}`
-    ).then((response) => response.json());
-    // .then((body) => {
-    //     const weatherData = {
-    //         temp: body.data[0].temp
-    //     };
-    //     return weatherData;
-    // })
-    // .then((weatherData) => {
-    //     Object.assign(projectData, weatherData);
-    //     console.log('LOG: getCurrentWeather');
-
-    //     console.log(projectData);
-    //     return projectData;
-    // })
-    // .then(() => {
-    //     res.send(projectData);
-    // })
-
-    // .catch((error) => console.log('ERROR -- getCurrentWeather: ', error));
-}
-
-app.post('/forecastWeather', getForecastWeather);
-
-function getForecastWeather(req, res) {
-    const weather = fetch(
-        `${baseURL_Weather}forecast/daily?lat=${req.body.lat}&lon=${req.body.lon}&key=${process.env.apiKey_Weather}`
-    )
-        .then((response) => {
-            const body = response.json();
-            return body;
-        })
-        .then((body) => {
-            const temp_fc = body.data[req.body.days].temp;
-            const weatherData = { temp_fc };
-            return weatherData;
-        })
-        .then((weatherData) => {
-            Object.assign(projectData, weatherData);
-            console.log('LOG: getForecastWeather');
-
-            console.log(projectData);
-            return projectData;
-        })
-        .then(() => {
-            res.send(projectData);
-        })
-
-        .catch((error) => console.log('ERROR -- getForecastWeather: ', error));
-}
-
-app.post('/picture', getPicture);
-
-function getPicture(req, res) {
-    console.log(
-        `${baseURL_Picture}?key=${process.env.apiKey_Pixabay}&q=${req.body.city}&image_type=photo`
-    );
-
-    const picture = fetch(
-        `${baseURL_Picture}?key=${process.env.apiKey_Pixabay}&q=${req.body.city}&image_type=photo`
-    )
-        .then((response) => {
-            const body = response.json();
-            return body;
-        })
-        .then((body) => {
-            const picture_url = body.hits[0].webformatURL;
-            const pictureData = { picture_url };
-            return pictureData;
-        })
-        .then((pictureData) => {
-            Object.assign(projectData, pictureData);
-            console.log('LOG: getPicture');
-
-            console.log(projectData);
-            return projectData;
-        })
-        .then(() => {
-            res.send(projectData);
-        })
-
-        .catch((error) => console.log('ERROR -- getPicture: ', error));
+        .catch((error) => console.log('ERROR -- getData: ', error));
 }

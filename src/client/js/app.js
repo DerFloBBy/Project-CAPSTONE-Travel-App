@@ -18,24 +18,18 @@ function performAction(event) {
     today = new Date(
         today.getMonth() + 1 + '.' + today.getDate() + '.' + today.getFullYear()
     );
-    console.log('---Heute (neu):');
-    console.log(today);
 
     let tDate = new Date(travelDate);
     let newTravelDate = new Date(
         tDate.getMonth() + 1 + '.' + tDate.getDate() + '.' + tDate.getFullYear()
     );
-    console.log('---TravelDate (neu):');
-    console.log(newTravelDate);
 
     let days = (newTravelDate - today) / (1000 * 60 * 60 * 24); // Umrechnung in Tage
-    console.log('---Tage:');
-    console.log(days, '\n');
 
     // Put Travel Data in an object
     allData = {
-        // dest: travelDest,
-        dest: 'london',
+        dest: travelDest,
+        // dest: 'london',
         days: days
     };
 
@@ -51,9 +45,10 @@ function performAction(event) {
 }
 
 async function apiRequest(allData) {
+    console.log('------------------------------');
     console.log('---allData:');
     console.log(allData);
-    fetch('http://localhost:8081/geonames', {
+    fetch('http://localhost:8081/apiRequest', {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
@@ -69,7 +64,7 @@ async function apiRequest(allData) {
             Object.assign(allData, result);
         })
         .then(() => {
-            console.log('--CLIENT: ERGEBNISS');
+            console.log('---CLIENT: ERGEBNIS');
             console.log(allData);
 
             document.querySelector(
@@ -107,73 +102,6 @@ async function apiRequest(allData) {
         })
 
         .catch((error) => console.log('ERROR -- apiRequest: ', error));
-}
-
-async function currentWeatherApiRequest(allData) {
-    console.log('---Koordinaten-current:');
-    console.log(allData);
-    fetch('http://localhost:8081/currentWeather', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(allData)
-    })
-        .then((apiResponse) => {
-            const result = apiResponse.json();
-            return result;
-        })
-        .then((result) => {
-            console.log(result);
-        })
-        .catch((error) =>
-            console.log('ERROR -- currentWeatherApiRequest: ', error)
-        );
-}
-
-async function forecastWeatherApiRequest(allData) {
-    console.log('---Koordinaten-forecast:');
-    console.log(allData);
-    fetch('http://localhost:8081/forecastWeather', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(allData)
-    })
-        .then((apiResponse) => {
-            const result = apiResponse.json();
-            return result;
-        })
-        .then((result) => {
-            console.log(result);
-        })
-        .catch((error) =>
-            console.log('ERROR -- forecastWeatherApiRequest: ', error)
-        );
-}
-
-async function pictureApiRequest(allData) {
-    console.log('---Bild:');
-    console.log(allData);
-    fetch('http://localhost:8081/picture', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(allData)
-    })
-        .then((apiResponse) => {
-            const result = apiResponse.json();
-            return result;
-        })
-        .then((result) => {
-            console.log(result);
-        })
-        .catch((error) => console.log('ERROR -- pictureApiRequest: ', error));
 }
 
 export { performAction };
