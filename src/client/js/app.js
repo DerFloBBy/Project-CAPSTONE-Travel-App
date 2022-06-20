@@ -30,12 +30,12 @@ function performAction(event) {
 
     let days = (newTravelDate - today) / (1000 * 60 * 60 * 24); // Umrechnung in Tage
     console.log('---Tage:');
-    console.log(days);
+    console.log(days, '\n');
 
     // Put Travel Data in an object
     allData = {
         // dest: travelDest,
-        dest: 'Berlin',
+        dest: 'berlin',
         days: days
     };
 
@@ -43,7 +43,7 @@ function performAction(event) {
         alert('Please insert a Destination');
     } else if (isNaN(allData.days)) {
         alert('Please insert a Travel Date!');
-    } else if (days < 0) {
+    } else if (allData.days < 0) {
         alert('Please select a date in the future!');
     } else {
         apiRequest(allData);
@@ -51,8 +51,8 @@ function performAction(event) {
 }
 
 async function apiRequest(allData) {
-    console.log('---Reiseziel:');
-    console.log(allData.dest);
+    console.log('---allData:');
+    console.log(allData);
     fetch('http://localhost:8081/geonames', {
         method: 'POST',
         credentials: 'same-origin',
@@ -68,31 +68,32 @@ async function apiRequest(allData) {
         .then((result) => {
             Object.assign(allData, result);
         })
+        // .then(() => {
+        //     if (allData.days > 7) {
+        //         console.log('Reise beginnt nach einer Woche');
+        //         forecastWeatherApiRequest(allData);
+        //     } else if (allData.days >= 0) {
+        //         console.log('Reise beginnt innerhalb einer Woche');
+        //         currentWeatherApiRequest(allData);
+        //     }
+        // })
+        // .then(() => {
+        //     console.log('Bilder abfragen');
+        //     pictureApiRequest(allData);
+        // })
         .then(() => {
-            if (allData.days > 7) {
-                console.log('Reise beginnt nach einer Woche');
-                forecastWeatherApiRequest(allData);
-            } else if (allData.days >= 0) {
-                console.log('Reise beginnt innerhalb einer Woche');
-                currentWeatherApiRequest(allData);
-            }
-        })
-        .then(() => {
-            console.log('Bilder abfragen');
-            pictureApiRequest(allData);
-        })
-        .then((result) => {
-            console.log(result);
+            console.log('--CLIENT: ERGEBNISS');
+            console.log(allData);
 
-            document.querySelector(
-                '#results_text'
-            ).innerHTML = `Your Text: ${result.text}`;
-            document.querySelector(
-                '#results_irony'
-            ).innerHTML = `Is it Irony? ${result.irony}`;
-            document.querySelector(
-                '#results_polarity'
-            ).innerHTML = `How is the Polarity? ${result.polarity}`;
+            //     document.querySelector(
+            //         '#results_text'
+            //     ).innerHTML = `Your Text: ${result.text}`;
+            //     document.querySelector(
+            //         '#results_irony'
+            //     ).innerHTML = `Is it Irony? ${result.irony}`;
+            //     document.querySelector(
+            //         '#results_polarity'
+            //     ).innerHTML = `How is the Polarity? ${result.polarity}`;
         })
 
         .catch((error) => console.log('ERROR -- apiRequest: ', error));

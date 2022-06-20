@@ -49,72 +49,140 @@ app.get('/getProjectData', function(req, res) {
     res.send(projectData);
 });
 
-// * EXAMPLE: http://api.geonames.org/searchJSON?q=berlin&maxRows=10&username=fboelke
-const baseURL_GeoNames = 'http://api.geonames.org/searchJSON?q=';
+const baseURL_GeoNames = 'http://api.geonames.org/searchJSON';
+const baseURL_Weather = 'https://api.weatherbit.io/v2.0/';
+const baseURL_Picture = 'https://pixabay.com/api/';
+
+// * EXAMPLE: https://api.weatherbit.io/v2.0/current?lat=52.52437&lon=13.41053&key=bd6c074fe9ad4fb88baca0323764482d
+// * EXAMPLE: https://api.weatherbit.io/v2.0/forecast/daily?lat=52.52437&lon=13.41053&key=bd6c074fe9ad4fb88baca0323764482d
+// * EXAMPLE: https://pixabay.com/api/?key=28156191-7d4384a79e79de40a1f5945d2&q=berlin&image_type=photo
+
+//
+// Using fetch insige another fetch
+// * SOURCE: https://stackoverflow.com/questions/40981040/using-a-fetch-inside-another-fetch-in-javascript
+//
 
 app.post('/geonames', getCoordinates);
 
 function getCoordinates(req, res) {
     Object.assign(projectData, req.body); // Client-Body to Server-ProjectData
+    console.log(
+        '-----------------------------------------------------------------------'
+    );
+    console.log('LOG: projectData #1');
+    console.log(projectData, '\n');
+
     const coordinates = fetch(
-        `${baseURL_GeoNames}${req.body.dest}&maxRows=1&username=${process.env.userName_GeoNames}`
+        `${baseURL_GeoNames}?q=${projectData.dest}&maxRows=1&username=${process.env.userName_GeoNames}`
     )
-        .then((response) => {
-            const body = response.json();
-            return body;
-        })
+        .then((response) => response.json())
         .then((body) => {
-            const city = body.geonames[0].name;
-            const country = body.geonames[0].countryName;
-            const lat = body.geonames[0].lat;
-            const lon = body.geonames[0].lng;
-            const geoData = { city, country, lat, lon };
+            const geoData = {
+                city: body.geonames[0].name,
+                country: body.geonames[0].countryName,
+                lat: body.geonames[0].lat,
+                lon: body.geonames[0].lng
+            };
             return geoData;
         })
         .then((geoData) => {
             Object.assign(projectData, geoData);
-            console.log(projectData);
+            console.log('LOG: projectData #2');
+            console.log(projectData, '\n');
             return projectData;
         })
+
+        // *** fetch WeatherbitAPI ***
+        // ***************************
+        .then((projectData) => {
+            if (projectData.days > 7) {
+                return fetch(
+                    `${baseURL_Weather}forecast/daily?lat=${projectData.lat}&lon=${projectData.lon}&key=${process.env.apiKey_Weather}`
+                );
+            } else if (projectData.days >= 0) {
+                return fetch(
+                    `${baseURL_Weather}current?lat=${projectData.lat}&lon=${projectData.lon}&key=${process.env.apiKey_Weather}`
+                );
+            }
+        })
+        .then((response) => response.json())
+        .then((body) => {
+            if (projectData.days > 15) {
+                Object.assign(projectData, {
+                    temp: body.data[15].temp
+                });
+            } else if (projectData.days > 7) {
+                Object.assign(projectData, {
+                    temp: body.data[projectData.days].temp
+                });
+            } else if (projectData.days >= 0) {
+                Object.assign(projectData, {
+                    temp: body.data[0].temp
+                });
+            }
+
+            console.log('LOG: projectData #3');
+            console.log(projectData, '\n');
+            return projectData;
+        })
+
+        // *** fetch PixbayAPI ***
+        // ***********************
+        .then((projectData) => {
+            return fetch(
+                `${baseURL_Picture}?key=${process.env.apiKey_Pixabay}&q=${projectData.city}&image_type=photo`
+            );
+        })
+        .then((response) => response.json())
+        .then((body) => {
+            Object.assign(projectData, {
+                picture_url: body.hits[0].webformatURL
+            });
+
+            console.log('LOG: projectData #4');
+            console.log(projectData, '\n');
+            return projectData;
+        })
+
         .then(() => {
             res.send(projectData);
         })
+
         .catch((error) => console.log('ERROR -- getCoordinates: ', error));
 }
-
-// * EXAMPLE: https://api.weatherbit.io/v2.0/current?lat=52.52437&lon=13.41053&key=bd6c074fe9ad4fb88baca0323764482d
-const baseURL_Weather = 'https://api.weatherbit.io/v2.0/';
 
 app.post('/currentWeather', getCurrentWeather);
 
 function getCurrentWeather(req, res) {
+    // const weather = fetch(
+    //     `${baseURL_Weather}current?lat=${req.body.lat}&lon=${req.body.lon}&key=${process.env.apiKey_Weather}`
+    // )
+    console.log('LOG: projectData #xxx');
+    console.log(projectData, '\n');
+
     const weather = fetch(
-        `${baseURL_Weather}current?lat=${req.body.lat}&lon=${req.body.lon}&key=${process.env.apiKey_Weather}`
-    )
-        .then((response) => {
-            const body = response.json();
-            return body;
-        })
-        .then((body) => {
-            const temp = body.data[0].temp;
-            const weatherData = { temp };
-            return weatherData;
-        })
-        .then((weatherData) => {
-            Object.assign(projectData, weatherData);
-            console.log('LOG: getCurrentWeather');
+        `${baseURL_Weather}current?lat=${projectData.lat}&lon=${projectData.lon}&key=${process.env.apiKey_Weather}`
+    ).then((response) => response.json());
+    // .then((body) => {
+    //     const weatherData = {
+    //         temp: body.data[0].temp
+    //     };
+    //     return weatherData;
+    // })
+    // .then((weatherData) => {
+    //     Object.assign(projectData, weatherData);
+    //     console.log('LOG: getCurrentWeather');
 
-            console.log(projectData);
-            return projectData;
-        })
-        .then(() => {
-            res.send(projectData);
-        })
+    //     console.log(projectData);
+    //     return projectData;
+    // })
+    // .then(() => {
+    //     res.send(projectData);
+    // })
 
-        .catch((error) => console.log('ERROR -- getCurrentWeather: ', error));
+    // .catch((error) => console.log('ERROR -- getCurrentWeather: ', error));
 }
 
-// * EXAMPLE: https://api.weatherbit.io/v2.0/forecast/daily?lat=52.52437&lon=13.41053&key=bd6c074fe9ad4fb88baca0323764482d
 app.post('/forecastWeather', getForecastWeather);
 
 function getForecastWeather(req, res) {
@@ -144,9 +212,6 @@ function getForecastWeather(req, res) {
         .catch((error) => console.log('ERROR -- getForecastWeather: ', error));
 }
 
-// * EXAMPLE: https://pixabay.com/api/?key=28156191-7d4384a79e79de40a1f5945d2&q=yellow+flowers&image_type=photo
-const baseURL_Picture = 'https://pixabay.com/api/';
-
 app.post('/picture', getPicture);
 
 function getPicture(req, res) {
@@ -156,6 +221,37 @@ function getPicture(req, res) {
 
     const picture = fetch(
         `${baseURL_Picture}?key=${process.env.apiKey_Pixabay}&q=${req.body.city}&image_type=photo`
+    )
+        .then((response) => {
+            const body = response.json();
+            return body;
+        })
+        .then((body) => {
+            const picture_url = body.hits[0].webformatURL;
+            const pictureData = { picture_url };
+            return pictureData;
+        })
+        .then((pictureData) => {
+            Object.assign(projectData, pictureData);
+            console.log('LOG: getPicture');
+
+            console.log(projectData);
+            return projectData;
+        })
+        .then(() => {
+            res.send(projectData);
+        })
+
+        .catch((error) => console.log('ERROR -- getPicture: ', error));
+}
+
+function getAnotherPicture(req, res) {
+    console.log(
+        `${baseURL_Picture}?key=${process.env.apiKey_Pixabay}&q=${req.body.city}&image_type=photo`
+    );
+
+    const picture = fetch(
+        `${baseURL_Picture}?key=${process.env.apiKey_Pixabay}&q=london&image_type=photo`
     )
         .then((response) => {
             const body = response.json();
