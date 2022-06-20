@@ -77,7 +77,11 @@ async function apiRequest(allData) {
                 currentWeatherApiRequest(allData);
             }
         })
-        .catch((error) => console.log('ERROOORRR: ', error));
+        .then(() => {
+            console.log('Bilder abfragen');
+            pictureApiRequest(allData);
+        })
+        .catch((error) => console.log('ERROR -- apiRequest: ', error));
 }
 
 async function currentWeatherApiRequest(allData) {
@@ -98,7 +102,9 @@ async function currentWeatherApiRequest(allData) {
         .then((result) => {
             console.log(result);
         })
-        .catch((error) => console.log('ERROOORRR: ', error));
+        .catch((error) =>
+            console.log('ERROR -- currentWeatherApiRequest: ', error)
+        );
 }
 
 async function forecastWeatherApiRequest(allData) {
@@ -119,7 +125,30 @@ async function forecastWeatherApiRequest(allData) {
         .then((result) => {
             console.log(result);
         })
-        .catch((error) => console.log('ERROOORRR: ', error));
+        .catch((error) =>
+            console.log('ERROR -- forecastWeatherApiRequest: ', error)
+        );
+}
+
+async function pictureApiRequest(allData) {
+    console.log('---Bild:');
+    console.log(allData);
+    fetch('http://localhost:8081/picture', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(allData)
+    })
+        .then((apiResponse) => {
+            const result = apiResponse.json();
+            return result;
+        })
+        .then((result) => {
+            console.log(result);
+        })
+        .catch((error) => console.log('ERROR -- pictureApiRequest: ', error));
 }
 
 export { performAction };

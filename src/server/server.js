@@ -79,7 +79,7 @@ function getCoordinates(req, res) {
         .then(() => {
             res.send(projectData);
         })
-        .catch((error) => console.log('ERROOORRR', error));
+        .catch((error) => console.log('ERROR -- getCoordinates: ', error));
 }
 
 // * EXAMPLE: https://api.weatherbit.io/v2.0/current?lat=52.52437&lon=13.41053&key=bd6c074fe9ad4fb88baca0323764482d
@@ -111,7 +111,7 @@ function getCurrentWeather(req, res) {
             res.send(projectData);
         })
 
-        .catch((error) => console.log('ERROOORRR', error));
+        .catch((error) => console.log('ERROR -- getCurrentWeather: ', error));
 }
 
 // * EXAMPLE: https://api.weatherbit.io/v2.0/forecast/daily?lat=52.52437&lon=13.41053&key=bd6c074fe9ad4fb88baca0323764482d
@@ -141,5 +141,41 @@ function getForecastWeather(req, res) {
             res.send(projectData);
         })
 
-        .catch((error) => console.log('ERROOORRR', error));
+        .catch((error) => console.log('ERROR -- getForecastWeather: ', error));
+}
+
+// * EXAMPLE: https://pixabay.com/api/?key=28156191-7d4384a79e79de40a1f5945d2&q=yellow+flowers&image_type=photo
+const baseURL_Picture = 'https://pixabay.com/api/';
+
+app.post('/picture', getPicture);
+
+function getPicture(req, res) {
+    console.log(
+        `${baseURL_Picture}?key=${process.env.apiKey_Pixabay}&q=${req.body.city}&image_type=photo`
+    );
+
+    const picture = fetch(
+        `${baseURL_Picture}?key=${process.env.apiKey_Pixabay}&q=${req.body.city}&image_type=photo`
+    )
+        .then((response) => {
+            const body = response.json();
+            return body;
+        })
+        .then((body) => {
+            const picture_url = body.hits[0].webformatURL;
+            const pictureData = { picture_url };
+            return pictureData;
+        })
+        .then((pictureData) => {
+            Object.assign(projectData, pictureData);
+            console.log('LOG: getPicture');
+
+            console.log(projectData);
+            return projectData;
+        })
+        .then(() => {
+            res.send(projectData);
+        })
+
+        .catch((error) => console.log('ERROR -- getPicture: ', error));
 }
