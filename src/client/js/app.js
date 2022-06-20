@@ -81,6 +81,20 @@ async function apiRequest(allData) {
             console.log('Bilder abfragen');
             pictureApiRequest(allData);
         })
+        .then((result) => {
+            console.log(result);
+
+            document.querySelector(
+                '#results_text'
+            ).innerHTML = `Your Text: ${result.text}`;
+            document.querySelector(
+                '#results_irony'
+            ).innerHTML = `Is it Irony? ${result.irony}`;
+            document.querySelector(
+                '#results_polarity'
+            ).innerHTML = `How is the Polarity? ${result.polarity}`;
+        })
+
         .catch((error) => console.log('ERROR -- apiRequest: ', error));
 }
 
