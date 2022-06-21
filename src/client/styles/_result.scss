@@ -1,0 +1,83 @@
+.result {
+    display: grid;
+    grid-template-columns: 90%;
+    justify-content: center;
+    margin: 5px;
+    .title {
+        // background: chartreuse;
+        font-weight: bold;
+        font-size: 20px;
+        text-align-last: center;
+        margin: 0 0 5px 0;
+    }
+}
+
+#entryHolder {
+    // background: yellow;
+    // border: 5px solid black;
+    background: rgba(59, 74, 107, 0.4);
+    background: rgb(87, 176, 87);
+    border-radius: 0.5em;
+    padding: 5px;
+}
+
+#travelDest {
+    // background: rgb(139, 139, 59);
+}
+
+#travelDeparture {
+    // background: rgb(73, 73, 50);
+}
+
+#travelTemp {
+    // background: rgb(83, 83, 8);
+}
+
+#travelPics {
+    // background: rgb(173, 173, 136);
+    img {
+        border-radius: 0 0 0.4em 0.4em;
+    }
+}
+
+@media (min-width: 769px) {
+    .result {
+        display: grid;
+        grid-template-columns: 45% 45%;
+
+        .title {
+            grid-column: 1 / 3;
+            font-size: 26px;
+        }
+    }
+
+    #entryHolder {
+        grid-column: 1/3;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 3em 1.5em auto;
+    }
+
+    #travelDest {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    #travelDeparture {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    #travelTemp {
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    #travelPics {
+        grid-column: 2;
+        grid-row: 1 / 4;
+        img {
+            border-radius: 0 0.4em 0.4em 0;
+        }
+    }
+}

@@ -1,0 +1,11 @@
+header {
+    font-size: 26px;
+    text-align: center;
+    font-weight: bold;
+}
+
+@media (min-width: 769px) {
+    header {
+        font-size: 42px;
+    }
+}

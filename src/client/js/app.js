@@ -31,6 +31,7 @@ function performAction(event) {
         dest: travelDest,
         // dest: 'london',
         days: days
+        // days: 2
     };
 
     if (allData.dest == '') {
@@ -69,7 +70,7 @@ async function apiRequest(allData) {
 
             document.querySelector(
                 '#travelDest'
-            ).innerHTML = `Your chosen travel destination: <strong>${allData.city}, ${allData.country}</strong>`;
+            ).innerHTML = `Your chosen travel destination:<br> <strong>${allData.city}, ${allData.country}</strong>`;
 
             if (allData.days === 0) {
                 document.querySelector(

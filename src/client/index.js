@@ -6,7 +6,9 @@ import { performAction } from './js/app.js';
 alert('TRAVEL APP IS ON');
 console.log('CHANGE!!');
 
-import './styles/style.scss';
+import './styles/index.scss';
+// import './styles/style.scss';
+
 // import './styles/resets.scss';
 // import './styles/base.scss';
 // import './styles/footer.scss';

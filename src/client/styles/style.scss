@@ -1,48 +1,48 @@
-body {
-    background: #f23557;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-}
+// body {
+//     background: #f23557;
+//     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+// }
 
-#app {
-    display: grid;
-    grid-auto-rows: minmax(50px, auto);
-    /* grid-template-columns:  */
-    // height: 100vh;
-    background: #f23557;
-    color: #f0d43a;
-    justify-content: center;
-    grid-gap: 0.5em;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
-}
+// #app {
+//     display: grid;
+//     grid-auto-rows: minmax(50px, auto);
+//     /* grid-template-columns:  */
+//     // height: 100vh;
+//     background: #f23557;
+//     color: #f0d43a;
+//     justify-content: center;
+//     grid-gap: 0.5em;
+//     font-size: 20px;
+//     font-family: 'Oswald', sans-serif;
+// }
 
-.headline {
-    font-size: 42px;
-    text-align: center;
-    // border: 5px solid black;
-}
+// .headline {
+//     font-size: 42px;
+//     text-align: center;
+//     // border: 5px solid black;
+// }
 
-.dest {
-    // border: 5px solid black;
-}
+// .dest {
+//     // border: 5px solid black;
+// }
 
-.date {
-    // border: 5px solid black;
-}
+// .date {
+//     // border: 5px solid black;
+// }
 
-.dataPoint {
-    border-radius: 0.5em;
-}
+// .dataPoint {
+//     border-radius: 0.5em;
+// }
 
-.btn {
-    // border: 5px solid black;
-}
+// .btn {
+//     // border: 5px solid black;
+// }
 
-.entry {
-    background: rgba(59, 74, 107, 0.4);
-    // border: 5px solid black;
-    width: 400px;
-}
+// .entry {
+//     background: rgba(59, 74, 107, 0.4);
+//     // border: 5px solid black;
+//     width: 400px;
+// }
 
 #travelPics {
     img {
@@ -73,56 +73,56 @@ input {
     box-shadow: 2px 4px 5px #444;
 }
 
-button {
-    width: 400px;
-    height: 100px;
-    background: #3b4a6b;
-    color: #f0d43a;
-    font-size: 26px;
-    font-family: 'Oswald', sans-serif;
-    border: none;
-    box-shadow: 2px 4px 5px #444;
-    border-radius: 0.5em;
-}
+// button {
+//     width: 400px;
+//     height: 100px;
+//     background: #3b4a6b;
+//     color: #f0d43a;
+//     font-size: 26px;
+//     font-family: 'Oswald', sans-serif;
+//     border: none;
+//     box-shadow: 2px 4px 5px #444;
+//     border-radius: 0.5em;
+// }
 
-button:hover /* Eigenschaften beim Überfahren mit der Maus */
- {
-    background-color: #2c3852; /* Neue Farbe */
-}
+// button:hover /* Eigenschaften beim Überfahren mit der Maus */
+//  {
+//     background-color: #2c3852; /* Neue Farbe */
+// }
 
-button:active {
-    background-color: #2e6630;
-    transform: translateY(4px);
-}
+// button:active {
+//     background-color: #2e6630;
+//     transform: translateY(4px);
+// }
 
-footer {
-    img {
-        width: 400px;
-    }
-}
+// footer {
+//     img {
+//         width: 400px;
+//     }
+// }
 
-/* Reset style for HTML element on active to have no border*/
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
-    outline: none;
-}
-/* Style for Placeholder Text*/
-::placeholder {
-    /* Firefox, Chrome, Opera */
-    color: #f0d43a;
-    font-family: 'Oswald', sans-serif;
-}
+// /* Reset style for HTML element on active to have no border*/
+// input:focus,
+// select:focus,
+// textarea:focus,
+// button:focus {
+//     outline: none;
+// }
+// /* Style for Placeholder Text*/
+// ::placeholder {
+//     /* Firefox, Chrome, Opera */
+//     color: #f0d43a;
+//     font-family: 'Oswald', sans-serif;
+// }
 
-:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: #f0d43a;
-    font-family: 'Oswald', sans-serif;
-}
+// :-ms-input-placeholder {
+//     /* Internet Explorer 10-11 */
+//     color: #f0d43a;
+//     font-family: 'Oswald', sans-serif;
+// }
 
-::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: #f0d43a;
-    font-family: 'Oswald', sans-serif;
-}
+// ::-ms-input-placeholder {
+//     /* Microsoft Edge */
+//     color: #f0d43a;
+//     font-family: 'Oswald', sans-serif;
+// }

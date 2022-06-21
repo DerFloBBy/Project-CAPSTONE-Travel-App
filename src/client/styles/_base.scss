@@ -1,0 +1,39 @@
+body {
+    display: grid;
+    grid-auto-rows: minmax(50px, auto);
+    grid-gap: 0.5em;
+    background: #b7ccae;
+    height: 100vh;
+    font-size: 20px;
+    font-family: 'Oswald', sans-serif;
+    // color: #f0d43a;
+    justify-content: center;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* Reset style for HTML element on active to have no border*/
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+/* Style for Placeholder Text*/
+::placeholder {
+    /* Firefox, Chrome, Opera */
+    font-family: 'Oswald', sans-serif;
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    font-family: 'Oswald', sans-serif;
+}
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    font-family: 'Oswald', sans-serif;
+}
