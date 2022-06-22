@@ -106,15 +106,21 @@ function getData(req, res) {
         .then((body) => {
             if (projectData.days > 15) {
                 Object.assign(projectData, {
-                    temp: body.data[15].temp
+                    temp: body.data[15].temp,
+                    icon: body.data[15].weather.icon,
+                    desc: body.data[15].weather.description
                 });
             } else if (projectData.days > 7) {
                 Object.assign(projectData, {
-                    temp: body.data[projectData.days].temp
+                    temp: body.data[projectData.days].temp,
+                    icon: body.data[projectData.days].weather.icon,
+                    desc: body.data[projectData.days].weather.description
                 });
             } else if (projectData.days >= 0) {
                 Object.assign(projectData, {
-                    temp: body.data[0].temp
+                    temp: body.data[0].temp,
+                    icon: body.data[0].weather.icon,
+                    desc: body.data[0].weather.description
                 });
             }
             return projectData;

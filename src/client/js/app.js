@@ -89,12 +89,17 @@ async function apiRequest(allData) {
             if (allData.days < 7) {
                 document.querySelector(
                     '#travelTemp'
-                ).innerHTML = `The current temperature is <strong>${allData.temp}°</strong>!`;
+                ).innerHTML = `The current temperature is <strong>${allData.temp}°</strong> with <strong>${allData.desc}</strong>!`;
             } else {
                 document.querySelector(
                     '#travelTemp'
-                ).innerHTML = `The temperature will be around <strong>${allData.temp}°</strong>.`;
+                ).innerHTML = `The temperature will be around <strong>${allData.temp}°</strong> with <strong>${allData.desc}</strong>.`;
             }
+
+            document.querySelector('#travelTempIcon').innerHTML = `<img
+                src="icons/${allData.icon}.png"
+                alt="WeatherIcon"
+            />`;
 
             document.querySelector('#travelPics').innerHTML = `<img
                 src="${allData.picture_url}"
