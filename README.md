@@ -1,13 +1,37 @@
-# Travel App Project
+# CAPSTONE -Travel App- Project
 
-## Overview
+## For what...
 
-This project requires you to create an asynchronous web app that uses Web API and user data to dynamically update the UI.
+With this app you can get information from multiple sources. Simply select your preferred travel destination and your travel date (must be within the next two weeks). - The app shows you the forecast weather and a beautiful picture of your chosen destination.
 
-## Instructions
+## Installing the App
 
-This will require modifying the `server.js` file and the `website/app.js` file. You can see `index.html` for element references, and once you are finished with the project steps, you can use `style.css` to style your application to customized perfection.
+Run `npm install` in the terminal to get required the packages
 
-## Extras
+### Required packages (Selection)
 
-If you are interested in testing your code as you go, you can use `tests.js` as a template for writing and running some basic tests for your code.
+-   express
+-   webpack
+-   webpack-cli
+-   body-parser
+-   cors
+-   dotenv
+-   node-fetch
+-   jest
+-   sass
+-   ...
+-   _(for the rest see `package.json`)_
+
+### .env file
+
+You have to rename the '.env-UpDateMe' file to '.env' and enter your own API credentials.
+
+## Used API's
+
+### GeoNames <https://www.geonames.org/export/web-services.html>
+
+_Example:_ <http://api.geonames.org/searchJSON?q=berlin&maxRows=10&username=fboelke>
+
+### Weatherbit API <https://www.weatherbit.io/api>
+
+### Pixabay <https://pixabay.com/api/docs/>
