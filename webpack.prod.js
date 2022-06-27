@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-// const WorkboxPlugin = require('workbox-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = {
     entry: './src/client/index.js',
@@ -38,8 +38,7 @@ module.exports = {
         new CopyPlugin({
             patterns: [{ from: 'src/client/icons', to: 'icons' }]
         }),
-        new MiniCssExtractPlugin({ filename: '[name].css' })
-        // !Komma nicht vergessen!
-        // new WorkboxPlugin.GenerateSW()
+        new MiniCssExtractPlugin({ filename: '[name].css' }),
+        new WorkboxPlugin.GenerateSW()
     ]
 };
