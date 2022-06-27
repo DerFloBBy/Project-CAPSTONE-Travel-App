@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-projectData = {};
+let projectData = {};
 
 // Require Express to run server and routes
 const express = require('express');
@@ -45,6 +45,11 @@ app.listen(8081, function() {
 //
 //
 //
+
+// For JestTesting the ServerSide
+app.get('/helloworld', (req, res) => {
+    res.status(200).send('Hello World!');
+});
 
 const baseURL_GeoNames = 'http://api.geonames.org/searchJSON';
 const baseURL_Weather = 'https://api.weatherbit.io/v2.0/';
@@ -151,3 +156,5 @@ function getData(req, res) {
 
         .catch((error) => console.log('ERROR -- getData: ', error));
 }
+
+module.exports = app;

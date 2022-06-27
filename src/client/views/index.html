@@ -20,7 +20,7 @@
                         type="text"
                         id="dest"
                         class="dataPoint"
-                        placeholder="Where do you wanne go?"
+                        placeholder="Where do you wanna go?"
                     />
                     <label class="date" for="date">Travel Date</label>
                     <input
@@ -40,7 +40,9 @@
                     </button>
                 </section>
                 <section class="result">
-                    <div class="title">Your Travel Data...</div>
+                    <div class="title" id="travelTitle">
+                        Your Travel Data ...
+                    </div>
                     <div id="entryHolder">
                         <div id="travelDest">
                             Your chosen travel destination:<br />
@@ -50,15 +52,16 @@
                             The journey starts <strong>TODAY</strong>!
                         </div>
                         <div id="travelTemp">
-                            The current temperature is <strong>11.8°</strong>!
+                            The current temperature is
+                            <strong>${allData.temp}°</strong>!
                         </div>
                         <div id="travelTempIcon">
-                            <img src="../icons/a01n.png" alt="WeatherIcon" />
+                            <img src="icons/u00n.png" alt="WeatherIcon" />
                         </div>
                         <div id="travelPics">
                             <img
-                                src="https://pixabay.com/get/g69a8bcd06c4a84a336bf3dca3d5cf50c6c0acfd6ecd36f3891226f6e0809dff35beab06e77bb351de578cbd8078124cfd45658a850a7dec1bb25726243a2de0a_640.jpg"
-                                alt="Bar"
+                                src="https://pixabay.com/get/gb39cb08c60d32dae75554bee4cbe1cf4db08149411ab08512aa15beac0d2ba6a834983d1a882cb115f864bcd7b3ab93b695542b5c4343390b79384febb70ed85_640.jpg"
+                                alt="Japan"
                             />
                         </div>
                     </div>

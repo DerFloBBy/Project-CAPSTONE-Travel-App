@@ -69,6 +69,10 @@ async function apiRequest(allData) {
             console.log(allData);
 
             document.querySelector(
+                '#travelTitle'
+            ).innerHTML = `Your Travel Data ...`;
+
+            document.querySelector(
                 '#travelDest'
             ).innerHTML = `Your chosen travel destination:<br> <strong>${allData.city}, ${allData.country}</strong>`;
 
