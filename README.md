@@ -1,4 +1,4 @@
-# CAPSTONE -Travel App- Project
+# CAPSTONE -**Travel App**- Project
 
 ## For what...
 
@@ -10,27 +10,27 @@ Run `npm install` in the terminal to get required the packages
 
 ### Required packages (Selection)
 
--   express
--   webpack
+-   **express**
+-   **webpack**
 -   webpack-cli
 -   body-parser
 -   cors
--   dotenv
+-   **dotenv**
 -   node-fetch
 -   jest
--   sass
+-   **sass**
 -   ...
 -   _(for the rest see `package.json`)_
 
 ### .env file
 
-You have to rename the '.env-UpDateMe' file to '.env' and enter your own API credentials.
+You have to rename the `.env-UpDateMe` file to `.env` and enter your own API credentials.
 
 ## Used API's
 
 ### GeoNames <https://www.geonames.org/export/web-services.html>
 
-_Example:_ <http://api.geonames.org/searchJSON?q=berlin&maxRows=10&username=fboelke>
+-   _Example:_ <http://api.geonames.org/searchJSON?q=berlin&maxRows=10&username=fboelke>
 
 ### Weatherbit API <https://www.weatherbit.io/api>
 
