@@ -51,13 +51,10 @@ app.get('/helloworld', (req, res) => {
     res.status(200).send('Hello World!');
 });
 
+// Start fetching the APIs
 const baseURL_GeoNames = 'http://api.geonames.org/searchJSON';
 const baseURL_Weather = 'https://api.weatherbit.io/v2.0/';
 const baseURL_Picture = 'https://pixabay.com/api/';
-
-// * EXAMPLE: https://api.weatherbit.io/v2.0/current?lat=52.52437&lon=13.41053&key=bd6c074fe9ad4fb88baca0323764482d
-// * EXAMPLE: https://api.weatherbit.io/v2.0/forecast/daily?lat=52.52437&lon=13.41053&key=bd6c074fe9ad4fb88baca0323764482d
-// * EXAMPLE: https://pixabay.com/api/?key=28156191-7d4384a79e79de40a1f5945d2&q=berlin&image_type=photo
 
 //
 // Using fetch insige another fetch
@@ -68,11 +65,6 @@ app.post('/apiRequest', getData);
 
 function getData(req, res) {
     Object.assign(projectData, req.body); // Client-Body to Server-ProjectData
-    console.log(
-        '-----------------------------------------------------------------------'
-    );
-    console.log('---projectData #1');
-    console.log(projectData, '\n');
 
     // *** fetch GeonamesAPI ***
     // ***************************
@@ -97,6 +89,7 @@ function getData(req, res) {
         // *** fetch WeatherbitAPI ***
         // ***************************
         .then((projectData) => {
+            // decision depending on which travel date was chosen
             if (projectData.days > 7) {
                 return fetch(
                     `${baseURL_Weather}forecast/daily?lat=${projectData.lat}&lon=${projectData.lon}&key=${process.env.apiKey_Weather}`
@@ -109,6 +102,7 @@ function getData(req, res) {
         })
         .then((response) => response.json())
         .then((body) => {
+            // decision depending on which travel date was chosen
             if (projectData.days > 15) {
                 Object.assign(projectData, {
                     temp: body.data[15].temp,
@@ -149,8 +143,6 @@ function getData(req, res) {
         })
 
         .then(() => {
-            console.log('---projectData #99');
-            console.log(projectData, '\n');
             res.send(projectData);
         })
 

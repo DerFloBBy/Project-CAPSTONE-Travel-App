@@ -7,12 +7,6 @@ function performAction(event) {
     let travelDest = document.querySelector('#dest').value;
     let travelDate = document.querySelector('#datepicker').value;
 
-    // * kann als alternative zur obigen auswahl genutzt werden * //
-    // let dataPoints = document.getElementsByClassName('dataPoint');
-    // console.log(dataPoints[0].value);
-    // console.log(dataPoints[1].value);
-    // * *************** * //
-
     // Calc days to departure
     let today = new Date();
     today = new Date(
@@ -29,9 +23,7 @@ function performAction(event) {
     // Put Travel Data in an object
     allData = {
         dest: travelDest,
-        // dest: 'london',
         days: days
-        // days: 2
     };
 
     if (allData.dest == '') {
@@ -46,9 +38,6 @@ function performAction(event) {
 }
 
 async function apiRequest(allData) {
-    console.log('------------------------------');
-    console.log('---allData:');
-    console.log(allData);
     fetch('http://localhost:8081/apiRequest', {
         method: 'POST',
         credentials: 'same-origin',
@@ -65,9 +54,6 @@ async function apiRequest(allData) {
             Object.assign(allData, result);
         })
         .then(() => {
-            console.log('---CLIENT: ERGEBNIS');
-            console.log(allData);
-
             document.querySelector(
                 '#travelTitle'
             ).innerHTML = `Your Travel Data ...`;
