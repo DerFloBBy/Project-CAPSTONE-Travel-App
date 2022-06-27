@@ -21,23 +21,7 @@
     margin: 0 0 5px 0;
 }
 
-#travelDest {
-    // background: rgb(139, 139, 59);
-}
-
-#travelDeparture {
-    // background: rgb(73, 73, 50);
-}
-
-#travelTemp {
-    // background: rgb(83, 83, 8);
-    // border: 5px solid red;
-}
-
 #travelTempIcon {
-    // background: rgb(83, 83, 8);
-    // border: 5px solid red;
-    // grid-column: 1;
     img {
         float: right;
         width: 50px;
@@ -45,7 +29,6 @@
 }
 
 #travelPics {
-    // background: rgb(173, 173, 136);
     img {
         border-radius: 0 0 0.4em 0.4em;
     }
@@ -85,10 +68,8 @@
     }
 
     #travelTempIcon {
-        // background: rgb(83, 83, 8);
         grid-column: 1;
         grid-row: 4;
-        // border: 5px solid red;
         img {
             float: right;
             width: 80px;
